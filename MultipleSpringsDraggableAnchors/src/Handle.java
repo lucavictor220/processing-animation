@@ -11,14 +11,25 @@ public class Handle {
     private int width = 20;
     private int height = 20;
 
+    public boolean isMoved() {
+        return isMoved;
+    }
+
+    public void setMoved(boolean moved) {
+
+        isMoved = moved;
+    }
+
+    private boolean isMoved = false;
+
     public double getSpring() {
         return spring;
     }
 
     Handle(PApplet p) {
         this.p = p;
-        this.x = p.random(0, p.width);
-        this.y = p.random(0, p.height);
+        this.x = p.random(0, p.width - width);
+        this.y = p.random(0, p.height - height);
     }
 
     public float getX() {
@@ -38,7 +49,7 @@ public class Handle {
     }
 
     public boolean mouseInsideHandle() {
-        return (x < p.mouseX & p.mouseX < width & y < p.mouseY & p.mouseY < height);
+        return (x < p.mouseX & p.mouseX < x+width & y < p.mouseY & p.mouseY < y+height);
     }
 
     void draw(float targetX, float targetY) {

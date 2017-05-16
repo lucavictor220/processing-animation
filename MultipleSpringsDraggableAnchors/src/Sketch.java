@@ -9,7 +9,7 @@ public class Sketch extends PApplet {
 
     private static final int Width = 600;
     private static final int Height = 600;
-    private int nrOfHandles = 3;
+    private int nrOfHandles = 5;
     private Handle[] handlesArray = new Handle[nrOfHandles];
 
     private Ball ball;
@@ -25,10 +25,18 @@ public class Sketch extends PApplet {
         if (ball.mouseInsideBall()) {
             ball.setIsMoving(false);
         }
+        for (i = 0; i < handlesArray.length; i++) {
+            if (handlesArray[i].mouseInsideHandle()) {
+                handlesArray[i].setMoved(true);
+            }
+        }
     }
 
     public void mouseReleased() {
         ball.setIsMoving(true);
+        for (i = 0; i < handlesArray.length; i++) {
+            handlesArray[i].setMoved(false);
+        }
     }
 
     public void mouseDragged() {
@@ -36,16 +44,17 @@ public class Sketch extends PApplet {
             ball.setX(mouseX);
             ball.setY(mouseY);
         }
-//        for (i = 0; i < handlesArray.length; i++) {
-//            if (handlesArray[i].mouseInsideHandle()) {
-//                handlesArray[i].setX(mouseX);
-//                handlesArray[i].setY(mouseY);
-//            }
-//        }
+        for (i = 0; i < handlesArray.length; i++) {
+            if (handlesArray[i].isMoved()) {
+                handlesArray[i].setX(mouseX);
+                handlesArray[i].setY(mouseY);
+            }
+        }
+
     }
 
 
-    public void init() {
+    private void init() {
         for (int i = 0; i < nrOfHandles; i++) {
             handlesArray[i] = new Handle(this);
         }
